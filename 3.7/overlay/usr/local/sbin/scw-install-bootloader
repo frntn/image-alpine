@@ -1,0 +1,11 @@
+#!/usr/bin/env ash
+
+grub-install --target=$(uname -m)-efi --bootloader-id=grub --removable \
+  --recheck --efi-dir=/boot/efi
+# needed by 10_linux otherwise no modules will be specified
+# cannot set this in /etc/default/grub :(
+export modules="sd-mod,ext4"
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# create mount point for the ESP
+mkdir -p /boot/efi

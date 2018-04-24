@@ -1,0 +1,5 @@
+#!/usr/bin/env ash
+
+rootpasswd=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 12)
+printf '%s' $rootpasswd >/root/.pw
+echo root:$rootpasswd | chpasswd
