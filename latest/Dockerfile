@@ -1,5 +1,5 @@
-## -*- docker-image-name: "scaleway/alpine:3.7" -*-
-FROM library/alpine:3.7
+## -*- docker-image-name: "scaleway/alpine:latest" -*-
+FROM ${DOCKER_ARCH}/alpine:latest
 
 MAINTAINER Scaleway <opensource@scaleway.com> (@scaleway)
 
