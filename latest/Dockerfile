@@ -33,7 +33,6 @@ RUN apk update \
 	&& if [ "$(uname -m)" == "aarch64" ]; then \
 	apk add linux-vanilla; \
 	else \
-	echo $DOCKER_ARCH && \
 	apk add linux-hardened; \
 	fi \
 	&& rm -rf /var/cache/apk/*
