@@ -54,6 +54,7 @@ RUN rc-update add sshd default\
  && rc-update add update-motd default \
  && rc-update add loopback default \
  && rc-update add scw-generate-net-config default \
+ && rc-update add scw-net-ipv6 default \
  && rc-update add scw-signal-booted default \
  && rc-update add scw-ssh-keys default \
  && rc-update add scw-initramfs-shutdown shutdown \
@@ -65,6 +66,9 @@ RUN rc-update add sshd default\
 
 # Remove the network configuration so it's generated at first boot
 RUN > /etc/network/interfaces
+
+# enable IPv6
+RUN echo "ipv6" >> /etc/modules
 
 # Allow login from ttyS0
 RUN echo "ttyS0" >> /etc/securetty
