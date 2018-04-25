@@ -1,5 +1,8 @@
 #!/usr/bin/env ash
 
-rootpasswd=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 12)
-printf '%s' $rootpasswd >/root/.pw
-echo root:$rootpasswd | chpasswd
+# check if the root password is not already set
+if [ $(grep root /etc/shadow | awk -F':' '{print $2}' | wc -c) -eq 1 ]; then
+	rootpasswd=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 12)
+	printf '%s' $rootpasswd >/root/.pw
+	echo root:$rootpasswd | chpasswd
+fi

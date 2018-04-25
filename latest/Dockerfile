@@ -24,14 +24,20 @@ RUN apk update \
 	grub-efi \
 	iptables \
 	ip6tables \
-	linux-hardened \
 	openrc \
 	openssh \
 	rsyslog \
 	util-linux \
 	&& apk upgrade \
 	openssl \
+	&& if [ "$(uname -m)" == "aarch64" ]; then \
+	apk add linux-vanilla; \
+	else \
+	echo $DOCKER_ARCH && \
+	apk add linux-hardened; \
+	fi \
 	&& rm -rf /var/cache/apk/*
+
 
 # Patch rootfs
 COPY ./overlay/ ./overlay-image-tools/ /
@@ -55,6 +61,7 @@ RUN rc-update add sshd default\
  && rc-update add scw-sync-kernel-extra default \
  && rc-update add scw-hostname default \
  && rc-update add scw-gen-machine-id default \
+ && rc-update add scw-gen-root-passwd default \
  && rc-status
 
 # Remove the network configuration so it's generated at first boot
