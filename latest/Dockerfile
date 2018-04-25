@@ -70,8 +70,8 @@ RUN > /etc/network/interfaces
 # enable IPv6
 RUN echo "ipv6" >> /etc/modules
 
-# Allow login from ttyS0
-RUN echo "ttyS0" >> /etc/securetty
+# Allow login from ttyS0 (x86_64) and ttyAMA0 (ARM64)
+RUN echo -e "ttyS0\nttyAMA0\n" >> /etc/securetty
 
 # Update permissions
 RUN chmod 700 /root
