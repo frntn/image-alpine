@@ -1,0 +1,33 @@
+#!/usr/bin/env ash
+# Copyright (c) 2018 Online SAS
+
+IPV6_ADDR=$(scw-metadata --cached IPV6_ADDRESS)
+IPV6_NMASK=$(scw-metadata --cached IPV6_NETMASK)
+IPV6_GW=$(scw-metadata --cached IPV6_GATEWAY)
+
+# only apply IPv6 configuration if it is enabled for the VM
+# or if we could retrieve the data from scw-metadata
+
+if [ ! -z "$IPV6_ADDR" ] && [ ! -z "$IPV6_NMASK" ] && [ ! -z "IPV6_GW" ]; then
+	for iface in $(ls /sys/class/net); do
+		# Only configure physical interfaces
+		# FIXME: the below will break the IPv6 default route
+		# if the instance has more than one physical interface !!
+		if readlink /sys/class/net/$iface | grep -s -v 'virtual' > /dev/null 2>&1; then
+			ip addr add ${IPV6_ADDR}/${IPV6_NMASK} dev $iface > /dev/null 2>&1
+			ip -6 r add default via ${IPV6_GW} dev $iface > /dev/null 2>&1
+
+			# append IPv6 configuration to /etc/network/interfaces
+			if [ $(grep -c "IPv6 configuration for $iface" /etc/network/interfaces) -eq 0 ]; then
+				cat <<EOF >> /etc/network/interfaces
+# IPv6 configuration for $iface
+iface $iface inet6 static
+	address $IPV6_ADDR
+	netmask $IPV6_NMASK
+	gateway $IPV6_GW
+	pre-up echo 0 > /proc/sys/net/ipv6/conf/$iface/accept_ra
+EOF
+			fi
+		fi
+	done
+fi
