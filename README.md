@@ -5,13 +5,13 @@
 
 Scripts to build the official Alpine image on Scaleway
 
-This image is built using [Image Tools](https://github.com/scaleway/image-tools) and depends on the [armbuild/alpine](https://registry.hub.docker.com/u/armbuild/alpine/) Docker image.
+This image is built using [Image Tools](https://github.com/scaleway/image-tools) and is sourced from the official [Alpine Linux docker repository available on Docker Hub](https://hub.docker.com/_/alpine/).
 
 <img src="http://alpinelinux.org/alpinelinux-logo.svg" width="400px" />
 
 ---
 
-**This image is meant to be used on a C1 server.**
+**This image is meant to be used on a VC1, START, or C2 server.**
 
 We use the Docker's building system and convert it at the end to a disk image that will boot on real servers without Docker. Note that the image is still runnable as a Docker container for debug or for inheritance.
 
