@@ -21,9 +21,9 @@ We use the Docker's building system and convert it at the end to a disk image th
 
 ## Install
 
-Build and write the image to /dev/nbd1 (see [documentation](https://doc.cloud.online.net/howto/create_image.html))
+Build and create your image using [Image Tools](https://github.com/scaleway/image-tools):
 
-    $ make install
+    image-tools $ make IMAGE_DIR=/path/to/image-alpine/latest/ EXPORT_DIR=$(mktemp -d) scaleway_image
 
 Full list of commands available at: [scaleway/image-tools](https://github.com/scaleway/image-tools/tree/master#commands)
 
