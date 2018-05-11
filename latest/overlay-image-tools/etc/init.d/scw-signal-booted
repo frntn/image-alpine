@@ -1,0 +1,16 @@
+#!/sbin/openrc-run
+# Copyright (c) 2015-2018 Scaleway <opensource@scaleway.com>
+# Released under the MIT license.
+
+description="SCW signal successful boot"
+
+depend() {
+    need root
+    after net
+}
+
+start() {
+    ebegin "SCW signal successful boot"
+    /usr/local/sbin/scw-signal-state booted
+    eend $?
+}

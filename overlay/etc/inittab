@@ -1,8 +1,0 @@
-# /etc/inittab
-
-::sysinit:/sbin/openrc sysinit
-::wait:/sbin/openrc default
-
-::respawn:/usr/local/sbin/dynamic-getty
-
-::shutdown:/sbin/openrc shutdown
