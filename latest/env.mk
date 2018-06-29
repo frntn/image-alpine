@@ -1,6 +1,5 @@
 IMAGE_NAME = alpine
 IMAGE_VERSION = latest
-IMAGE_VERSION_ALIASES =	latest stable
 IMAGE_TITLE = Alpine Linux
 IMAGE_DESCRIPTION = Alpine Linux
 IMAGE_SOURCE_URL = https://github.com/scaleway/image-alpine
