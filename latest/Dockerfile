@@ -30,16 +30,12 @@ RUN apk update \
   rsyslog \
   util-linux \
   bash \
+  linux-vanilla \
   && apk upgrade \
   openssl \
-  && if [ "$(uname -m)" == "aarch64" ]; then \
-  apk add linux-vanilla; \
-  else \
-  apk add linux-hardened; \
-  fi \
   && rm -rf /var/cache/apk/*
 
-RUN if apk info -e linux-vanilla && [ -f /boot/vmlinuz ]; then ln -s vmlinuz /boot/vmlinuz-vanilla; fi
+RUN if [ -f /boot/vmlinuz ]; then ln -s vmlinuz /boot/vmlinuz-vanilla; fi
 
 
 # Patch rootfs
